@@ -11,10 +11,14 @@ public class Player : MonoBehaviour
 
     Rigidbody2D rigid; // 플레이어에 부착된 Rigidbody2D 컴포넌트에 대한 참조
 
+    SpriteRenderer spriter;
+    Animator anim;
     void Start()
     {
         // 플레이어 오브젝트에 부착된 Rigidbody2D 컴포넌트를 가져와서 참조를 초기화합니다.
         rigid = GetComponent<Rigidbody2D>();
+        spriter = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // void Update()
@@ -39,5 +43,14 @@ public class Player : MonoBehaviour
     {
         // 입력 값을 받아와서 inputVec에 저장합니다.
         inputVec = value.Get<Vector2>();
+    }
+
+    void LateUpdate()
+    {
+        anim.SetFloat("Speed", inputVec.magnitude);
+
+        if (inputVec.x != 0){
+            spriter.flipX = inputVec.x < 0;
+        }
     }
 }
